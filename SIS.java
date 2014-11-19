@@ -5,6 +5,8 @@
  */
 package sis;
 
+import java.io.IOException;
+
 /**
  *
  * @author pedro
@@ -16,6 +18,15 @@ public class SIS {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        try {
+            ReadAndScan readAndScan = new ReadAndScan("courses.csv");
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        } catch (InvalidFileTypeException ex) {
+            System.out.println(ex.getMessage());
+        } catch (FailedToParseFileLineException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
     
 }
