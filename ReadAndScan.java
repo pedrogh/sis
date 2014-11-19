@@ -19,18 +19,22 @@ import java.util.Scanner;
 public class ReadAndScan {
 
     // Type of the file.
-    private InputFileType fileType = InputFileType.UNKNOWN;
+    private InputFileType _fileType = InputFileType.UNKNOWN;
+    private IEnrollment _enrollment = null;
 
-    public ReadAndScan(String aFileName) throws IOException, InvalidFileTypeException, FailedToParseFileLineException {
-        fFilePath = Paths.get(aFileName);
+    public ReadAndScan(String coursesFileName, String studentsFileName, IEnrollment enrollment) throws IOException, InvalidFileTypeException, FailedToParseFileLineException {
+        
         try {
+            _enrollment = enrollment;
             String current = new java.io.File(".").getCanonicalPath();
             System.out.println("Current dir:" + current);
-            this.processLineByLine();
+            this.processLineByLine(coursesFileName);
+            this.processLineByLine(studentsFileName);
+            _enrollment.printEnrollment();
         } catch (InvalidFileTypeException ex) {
-            System.out.println("Invalid file type: " + aFileName + ex.getMessage());
+            System.out.println("Invalid file type: " + ex.getMessage());
         } catch (IOException ex) {
-            System.out.println("Could not read file: " + aFileName);
+            System.out.println("Could not read file");
         }
     }
 
@@ -40,18 +44,19 @@ public class ReadAndScan {
      * @throws IOException
      * @throws InvalidFileTypeException
      */
-    public final void processLineByLine() throws IOException, InvalidFileTypeException, FailedToParseFileLineException {
+    public final void processLineByLine(String fileName) throws IOException, InvalidFileTypeException, FailedToParseFileLineException {
+        fFilePath = Paths.get(fileName);
         try (Scanner scanner = new Scanner(fFilePath, ENCODING.name())) {
             // Determine the type of file.  Student or course.
             String headerLine = scanner.nextLine();
-            fileType = DetermineFileType(headerLine);
-            if (fileType == InputFileType.UNKNOWN) {
+            _fileType = DetermineFileType(headerLine);
+            if (_fileType == InputFileType.UNKNOWN) {
                 throw new InvalidFileTypeException("File is not of type student or course.");
             } else {
                 while (scanner.hasNextLine()) {
-                    if (fileType == InputFileType.STUDENT) {
+                    if (_fileType == InputFileType.STUDENT) {
                         processStudentLine(scanner.nextLine());
-                    } else if (fileType == InputFileType.COURSE) {
+                    } else if (_fileType == InputFileType.COURSE) {
                         processCourseLine(scanner.nextLine());
                     }
                 }
@@ -137,6 +142,8 @@ public class ReadAndScan {
             }
 
             LogCourseLine(courseID, courseName, state);
+            Course course = new Course(new Integer(courseID), courseName, state);
+            _enrollment.addCourse(course);
 
         } else {
             log("Empty or invalid line. Unable to process.");
@@ -196,6 +203,9 @@ public class ReadAndScan {
             }
 
             LogStudentLine(userID, userName, courseID, state);
+            
+            Student student = new Student(new Integer(userID), userName, new Integer(courseID), state);
+            _enrollment.addStudentToCourse(student);
 
         } else {
             log("Empty or invalid line. Unable to process.");
@@ -215,7 +225,7 @@ public class ReadAndScan {
     }
 
     // PRIVATE 
-    private final Path fFilePath;
+    private Path fFilePath;
     private final static Charset ENCODING = StandardCharsets.UTF_8;
 
     private static void log(Object aObject) {

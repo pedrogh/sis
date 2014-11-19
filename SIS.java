@@ -18,8 +18,9 @@ public class SIS {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        try {
-            ReadAndScan readAndScan = new ReadAndScan("courses.csv");
+        try {            
+            IEnrollment enrollment = new Enrollment();
+            ReadAndScan readAndScan = new ReadAndScan("courses.csv", "students.csv", enrollment);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         } catch (InvalidFileTypeException ex) {
