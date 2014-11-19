@@ -61,6 +61,7 @@ public class Enrollment implements IEnrollment {
 
     @Override
     public void printEnrollment() {
+        System.out.println("Enrollment");
         for (SortedMap.Entry<Integer, Course> entry : _courses.entrySet()) {
             Integer key = entry.getKey();
             Course  value = entry.getValue();

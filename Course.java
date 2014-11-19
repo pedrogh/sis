@@ -38,7 +38,30 @@ public class Course {
      * @param student
      */
     public void addStudent(Student student) {
-
+        // Find the student
+        Student studentInCourse = getStudentWithId(student.getUserId());
+        // The student wasn't there so add it
+        if (studentInCourse == null) {
+            _students.add(student);
+        }
+        else {
+            // The student was there.  I assume we can only update the
+            // state.  Maybe the course should be checked.
+            studentInCourse.setState(student.getState());
+        }        
+    }
+    
+    protected Student getStudentWithId(Integer StudentId) {
+        Student studentWithId = null;
+        for(int i = 0; i < _students.size(); i++) {
+            Student student = (Student)_students.get(i);
+            if (student.getUserId() == StudentId) {
+                studentWithId = student;
+                //System.out.println("\t\tStudent: " + student);
+            }
+        }
+        
+        return studentWithId;
     }
 
     public Vector getStudents() {
@@ -74,14 +97,16 @@ public class Course {
     }
 
     public void printStudents() {
-        Iterator it = _students.iterator();
+        //Iterator it = _students.iterator();
 
         // To iterate through the elements of the collection we can use hasNext() and next() methods of Iterator
         
-        while (it.hasNext()) {
-            Student student = (Student) it.next();
-            if (student.getState().equalsIgnoreCase("active") == true) {
-                System.out.println("\tStudent: " + student.getUserName());
+        System.out.println("\tStudents in class:");
+        //while (it.hasNext()) {
+        for(int i = 0; i < _students.size(); i++) {
+            Student student = (Student)_students.get(i);
+            if (student.getState().equalsIgnoreCase("active")) {
+                System.out.println("\t\tStudent: " + student);
             }
         }
 

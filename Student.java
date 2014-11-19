@@ -53,4 +53,14 @@ public class Student {
     public void setState(String state) {
         this._state = state;
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        String NEW_LINE = System.getProperty("line.separator");
+
+        result.append(" Student Name: " + getUserName() + NEW_LINE);   
+
+        return result.toString();
+    }
 }

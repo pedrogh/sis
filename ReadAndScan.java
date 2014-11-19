@@ -229,7 +229,7 @@ public class ReadAndScan {
     private final static Charset ENCODING = StandardCharsets.UTF_8;
 
     private static void log(Object aObject) {
-        System.out.println(String.valueOf(aObject));
+        System.out.println("log: " + String.valueOf(aObject));
     }
 
     private String quote(String aText) {
