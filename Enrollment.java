@@ -10,7 +10,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
- *
+ *  Implementation of IEnrollment.
  * @author pedro
  */
 public class Enrollment implements IEnrollment {
@@ -72,5 +72,10 @@ public class Enrollment implements IEnrollment {
                 value.printStudents();
             }
         }
+    }
+    
+    @Override
+    public int getNumberOfCourses() {
+        return _courses.size();
     }
 }

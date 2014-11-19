@@ -8,7 +8,7 @@ package sis;
 import java.io.IOException;
 
 /**
- *
+ * Main class.
  * @author pedro
  */
 public class SIS {

@@ -16,6 +16,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+/**
+ * Reads and scans the input files and feeds the data to the IEnrollment object.
+ * @author pedro
+ */
 public class ReadAndScan {
 
     // Type of the file.

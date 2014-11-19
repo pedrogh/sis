@@ -6,7 +6,7 @@
 package sis;
 
 /**
- *
+ * Class to hold student data.
  * @author pedro
  */
 public class Student {

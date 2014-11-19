@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 /**
- *
+ * Class to hold Course data.
  * @author pedro
  */
 public class Course {
